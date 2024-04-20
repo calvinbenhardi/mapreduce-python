@@ -1,37 +1,18 @@
 from services.csv_loader import CSVLoaderService
+from services.mapper import Mapper
+from services.reducer import Reducer
 
 
-csv_loader_service = CSVLoaderService()
-data = csv_loader_service.open()
-print(data)
+if __name__ == "__main__":
+    # Wiring Depedencies
+    csv_loader_service = CSVLoaderService()
+    mapper = Mapper()
+    reducer = Reducer()
 
-# Map function
-def mapper(item):
-    word, count = item
-    result = [(word, 1)]
-    return result
+    # Load the csv file
+    data = csv_loader_service.open()
 
-# Map phase
-intermediate_data = []
-for item in data:
-    intermediate_data.extend(mapper(item))
-print("mapper result ", intermediate_data)
+    map_result = mapper.run(data)
+    mapreduce_result = reducer.run(map_result)
 
-# Reduce function
-def reducer(key, values):
-    return key, sum(values)
-
-# Shuffle and Sort
-sorted_intermediate_data = sorted(intermediate_data, key=lambda x: x[0])
-print("Sorted result  : ", sorted_intermediate_data)
-
-# Reduce phase
-final_output = {}
-for word, count in intermediate_data:
-    if word not in final_output:
-        final_output[word] = []
-    final_output[word].append(count)
-print("reducer result : ", final_output)
-
-result = [(key, reducer(key, values)) for key, values in final_output.items()]
-print(result)
+    print(mapreduce_result)
