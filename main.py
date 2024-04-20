@@ -1,13 +1,9 @@
-# Sample data
-data = [
-    ("apple", 1),
-    ("banana", 1),
-    ("apple", 1),
-    ("banana", 1),
-    ("apple", 1),
-    ("banana", 1),
-    ("apple", 1),
-]
+from services.csv_loader import CSVLoaderService
+
+
+csv_loader_service = CSVLoaderService()
+data = csv_loader_service.open()
+print(data)
 
 # Map function
 def mapper(item):
