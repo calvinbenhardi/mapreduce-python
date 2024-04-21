@@ -7,7 +7,6 @@ class Reducer:
 
     def run(self, data):
         sorted_data = self._shuffle_and_short(data)
-        print(sorted_data)
         output = {}
         for word, count in sorted_data:
             if word not in output:

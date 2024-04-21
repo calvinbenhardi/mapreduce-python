@@ -1,3 +1,5 @@
+from pprint import pprint
+
 from services.csv_loader import CSVLoaderService
 from services.mapper import Mapper
 from services.reducer import Reducer
@@ -13,6 +15,12 @@ if __name__ == "__main__":
     data = csv_loader_service.open()
 
     map_result = mapper.run(data)
-    mapreduce_result = reducer.run(map_result)
+    print("MAPPER RESULT : \n")
+    pprint(map_result)
+    print("\n")
 
-    print(mapreduce_result)
+    mapreduce_result = reducer.run(map_result)
+    print("MAPREDUCE RESULT : \n")
+    pprint(mapreduce_result)
+    print("\n")
+
